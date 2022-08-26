@@ -8,15 +8,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class FillDatabase {
-    private static final Logger log = LoggerFactory.getLogger(FillDatabase.class);
-
-    @Bean
-    CommandLineRunner initDatabase(StudentRepository studentRepository) {
-        return args -> {
-            log.info("Preloading " + studentRepository.save(new Student("Bilbo Baggins", "FPD-23-23")));
-            log.info("Preloading " + studentRepository.save(new Student("Frodo Baggins", "EID-19-27")));
-        };
-    }
-}
+//@Configuration
+//public class FillDatabase {
+//    private static final Logger log = LoggerFactory.getLogger(FillDatabase.class);
+//
+//    @Bean
+//    CommandLineRunner initDatabase(StudentRepository studentRepository) {
+//        return args -> {
+//            log.info("Preloading " + studentRepository.save(new Student("Bilbo Baggins", "FPD-23-23")));
+//            log.info("Preloading " + studentRepository.save(new Student("Frodo Baggins", "EID-19-27")));
+//        };
+//    }
+//}
