@@ -1,6 +1,6 @@
 package com.example.rest;
 
-import com.example.rest.controller.StudentNotFoundException;
+import com.example.rest.controller.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class StudentNotFoundAdvice {
+public class UserNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(StudentNotFoundException.class)
+    @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String studentNotFoundHandler(StudentNotFoundException ex){
+    String userNotFoundHandler(UserNotFoundException ex){
         return ex.getMessage();
     }
 }

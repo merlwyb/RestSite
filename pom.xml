@@ -12,7 +12,7 @@
     <artifactId>rest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>rest</name>
-    <description>Raifazen</description>
+    <description>Rest</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -39,6 +39,14 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
