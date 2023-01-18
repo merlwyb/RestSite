@@ -1,7 +1,6 @@
 package com.example.rest.entity;
 
 import com.example.rest.entity.security.Role;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class User implements Serializable {
     private Long id;
     private String fullName;
     private String login;
-    private String password; //TODO хэшировать пароль
+    private String hashPassword; //TODO хэшировать пароль
     private Double tokenAmount;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -32,10 +31,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String fullName, String login, String password) {
+    public User(String fullName, String login, String hashPassword) {
         this.fullName = fullName;
         this.login = login;
-        this.password = password;
+        this.hashPassword = hashPassword;
         this.tokenAmount = 1.0;
     }
 
@@ -63,12 +62,12 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHashPassword() {
+        return hashPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashPassword(String password) {
+        this.hashPassword = password;
     }
 
     public Double getTokenAmount() {

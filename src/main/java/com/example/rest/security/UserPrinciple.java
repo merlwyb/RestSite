@@ -111,7 +111,7 @@ public class UserPrinciple implements UserDetails {
         return new UserPrinciple(
                 user.getId(),
                 user.getLogin(),
-                user.getPassword(),
+                user.getHashPassword(),
                 user.getFullName(),
                 authorities
         );
