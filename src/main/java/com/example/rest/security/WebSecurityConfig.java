@@ -39,9 +39,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfig {
 
-//    @Value("${spring.h2.console.path}")
-//    private String h2ConsolePath;
-
     @Autowired
     UserDetailsService userDetailsService;
 

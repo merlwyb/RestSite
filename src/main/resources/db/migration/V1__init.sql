@@ -30,7 +30,7 @@ VALUES (next value for sq_role_id, 'ROLE_ADMIN');
 -- admin:admin
 -- omni:omni
 INSERT INTO USERS (id, login, password, full_name, token_amount)
-VALUES (next value for sq_user_id, 'admin', 'admin', 'Ivanov Igor Ivanovich', 100.0),
+VALUES (next value for sq_user_id, 'admin', '$2a$04$l6jf/IelD8EcKEx0z5LJFur01DtdBcTLUxfiq79X1GF2hgJdmIeEW', 'Ivanov Igor Ivanovich', 100.0),
        (next value for sq_user_id, 'user', 'user', 'Nikolaev Zib Arm', 0.0);
 
 INSERT INTO USER_ROLE (user_id, role_id)

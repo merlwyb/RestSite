@@ -37,12 +37,9 @@ public class SecurityController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateEmployee(@RequestBody LoginFormDto loginFormDto) {
-        String trimmedLoginInLowerCase = loginFormDto.getLogin().trim().toLowerCase();
-
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(trimmedLoginInLowerCase, loginFormDto.getPassword());
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginFormDto.getLogin(), loginFormDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwtToken = jwtProvider.generateJwtToken(authentication);
 
         return ResponseEntity.ok(new JwtResponse(jwtToken));
