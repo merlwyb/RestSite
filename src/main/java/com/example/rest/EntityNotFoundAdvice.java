@@ -1,18 +1,17 @@
 package com.example.rest;
 
-import com.example.rest.controller.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
-public class UserNotFoundAdvice {
-    @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String userNotFoundHandler(UserNotFoundException ex){
-        return ex.getMessage();
-    }
-}
+//@ControllerAdvice
+//public class EntityNotFoundAdvice {
+//    @ResponseBody
+//    @ExceptionHandler(EntityNotFoundException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    String entityNotFoundHandler(EntityNotFoundException ex){
+//        return ex.getMessage();
+//    }
+//}

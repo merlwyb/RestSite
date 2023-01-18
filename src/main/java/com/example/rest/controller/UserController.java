@@ -1,58 +1,58 @@
 package com.example.rest.controller;
 
 import com.example.rest.entity.User;
-import com.example.rest.repository.UserRepository;
+import com.example.rest.service.UserService;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     List<User> all() {
-        return userRepository.findAll();
+        return userService.getAll();
     }
 
     @PostMapping
     User newUser(@RequestBody User newUser) {
-        return userRepository.save(newUser);
+        return userService.save(newUser);
     }
 
     @GetMapping("/{id}")
-    EntityModel<User> findStudentById(@PathVariable Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    EntityModel<User> findUserById(@PathVariable Long id) {
+        User user = userService.findById(id);
 
         return EntityModel.of(user,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).findStudentById(id)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).findUserById(id)).withSelfRel(),
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).all()).withRel("users"));
         //return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PutMapping("/{id}")
-    User replaceStudent(@RequestBody User newUser, @PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    user.setFullName(newUser.getFullName());
-                    return userRepository.save(user);
-                }).orElseGet(() -> {
-                    newUser.setId(id);
-                    return userRepository.save(newUser);
-                });
-    }
+//    @PutMapping("/{id}")
+//    User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
+//        return userService.findById(id)
+//                .map(user -> {
+//                    user.setFullName(newUser.getFullName());
+//                    return userService.save(user);
+//                }).orElseGet(() -> {
+//                    newUser.setId(id);
+//                    return userService.save(newUser);
+//                });
+//    }
 
     @DeleteMapping("/{id}")
-    void deleteStudent(@PathVariable Long id) {
-        userRepository.deleteById(id);
+    void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
     }
 
 }
