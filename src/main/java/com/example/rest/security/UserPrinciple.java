@@ -36,14 +36,17 @@ public class UserPrinciple implements UserDetails {
 
     private String fullName;
 
+    private Double tokenAmount;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long id, String login, String password, String fullName, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrinciple(Long id, String login, String password, String fullName, Double tokenAmount, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.fullName = fullName;
         this.authorities = authorities;
+        this.tokenAmount = tokenAmount;
     }
 
     public Long getId() {
@@ -63,6 +66,10 @@ public class UserPrinciple implements UserDetails {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public Double getTokenAmount() {
+        return tokenAmount;
     }
 
     @Override
@@ -113,6 +120,7 @@ public class UserPrinciple implements UserDetails {
                 user.getLogin(),
                 user.getHashPassword(),
                 user.getFullName(),
+                user.getTokenAmount(),
                 authorities
         );
     }
