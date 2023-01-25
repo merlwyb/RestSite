@@ -78,7 +78,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/favicon.ico").permitAll()
                 // login
-                .antMatchers("/security/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 //
                 //.antMatchers("/app/**").permitAll()
                 // h2 console

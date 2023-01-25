@@ -11,7 +11,7 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_generator")
     @SequenceGenerator(name = "role_id_generator", sequenceName = "sq_role_id", allocationSize = 1)
-    private Long id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId

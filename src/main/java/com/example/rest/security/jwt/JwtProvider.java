@@ -39,23 +39,21 @@ public class JwtProvider {
     @Value("${rest.security.jwtExpiration}")
     private int jwtExpiration;
 
-    public String generateJwtToken(Authentication authentication) {
-        UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
-
+    public String generateJwtToken(UserPrinciple userPrincipal) {
         return Jwts.builder()
-            .setSubject(userPrincipal.getUsername())
-            .setIssuedAt(Date.from(Instant.now()))
-            .setExpiration(Date.from(Instant.now().plus(jwtExpiration, SECONDS)))
-            .claim("currentUser", toJsonString(userPrincipal))
-            .signWith(SignatureAlgorithm.HS512, JWT_SIGN_SECRET)
-            .compact();
+                .setSubject(userPrincipal.getUsername())
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(Date.from(Instant.now().plus(jwtExpiration, SECONDS)))
+                .claim("currentUser", toJsonString(userPrincipal))
+                .signWith(SignatureAlgorithm.HS512, JWT_SIGN_SECRET)
+                .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser()
-            .setSigningKey(JWT_SIGN_SECRET)
-            .parseClaimsJws(token)
-            .getBody().getSubject();
+                .setSigningKey(JWT_SIGN_SECRET)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {

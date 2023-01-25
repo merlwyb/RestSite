@@ -14,10 +14,10 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     @SequenceGenerator(name = "user_id_generator", sequenceName = "sq_user_id", allocationSize = 1)
-    private Long id;
+    private long id;
     private String fullName;
     private String login;
-    private String hashPassword; //TODO хэшировать пароль
+    private String hashPassword;
     private Double tokenAmount;
 
     @ManyToMany(fetch = FetchType.LAZY)
