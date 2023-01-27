@@ -1,22 +1,8 @@
-/*
- * Copyright (c) 2008-2020
- * LANIT
- * All rights reserved.
- *
- * This product and related documentation are protected by copyright and
- * distributed under licenses restricting its use, copying, distribution, and
- * decompilation. No part of this product or related documentation may be
- * reproduced in any form by any means without prior written authorization of
- * LANIT and its licensors, if any.
- *
- * $
- */
 package com.example.rest.security;
+
 
 import com.example.rest.security.jwt.JwtAuthEntryPoint;
 import com.example.rest.security.jwt.JwtAuthTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,19 +17,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     prePostEnabled = true
 )
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
 
-    @Autowired
+    final
     UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthEntryPoint unauthorizedHandler;
+    private final JwtAuthEntryPoint unauthorizedHandler;
+
+    public WebSecurityConfig(UserDetailsService userDetailsService, JwtAuthEntryPoint unauthorizedHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
 
     @Bean
     public JwtAuthTokenFilter authenticationJwtTokenFilter() {
@@ -94,5 +86,12 @@ public class WebSecurityConfig {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("*");
     }
 }
