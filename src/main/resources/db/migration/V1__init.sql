@@ -39,3 +39,51 @@ INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (1, 1),
        (1, 2),
        (2, 1);
+
+
+CREATE TABLE GAME
+(
+    id   NUMBER PRIMARY KEY,
+    type varchar2(50) NOT NULL UNIQUE
+);
+CREATE SEQUENCE sq_game_id START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE MATCH
+(
+    id              NUMBER PRIMARY KEY,
+    bet             NUMBER NOT NULL,
+    multiply        NUMBER NOT NULL,
+    result          NUMBER NOT NULL,
+    match_date_time TIMESTAMP
+);
+CREATE SEQUENCE sq_match_id START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE MATCH_GAME
+(
+    match_id NUMBER NOT NULL,
+    game_id  NUMBER NOT NULL
+);
+
+CREATE TABLE MATCH_USER
+(
+    match_id NUMBER NOT NULL,
+    user_id  NUMBER NOT NULL
+);
+
+INSERT INTO GAME
+VALUES (next value for sq_game_id, 'GAME_MINES');
+INSERT INTO GAME
+VALUES (next value for sq_game_id, 'GAME_DICE');
+
+INSERT INTO MATCH (id, bet, multiply, result, match_date_time)
+VALUES (next value for sq_match_id, 15.54, 0.5, 7.77, '2022-01-27 18:47:52'),
+       (next value for sq_match_id, 22, 0.5, 11, '2022-01-26 18:45:52'),
+       (next value for sq_match_id, 89, 0.8, 0, '2022-01-27 19:48:52');
+
+INSERT INTO MATCH_GAME (match_id, game_id)
+VALUES (1, 1);
+
+INSERT INTO MATCH_USER (match_id, user_id)
+VALUES (1, 1),
+       (2, 1),
+       (3, 2);

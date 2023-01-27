@@ -4,9 +4,10 @@ import com.example.rest.entity.User;
 import com.example.rest.service.UserService;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping
-    List<User> all() {
-        return userService.getAll();
+            ResponseEntity<List<User>> all() {
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping

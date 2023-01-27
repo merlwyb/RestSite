@@ -18,7 +18,7 @@ public class User implements Serializable {
     private String fullName;
     private String login;
     private String hashPassword;
-    private Double tokenAmount;
+    private double tokenAmount;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
