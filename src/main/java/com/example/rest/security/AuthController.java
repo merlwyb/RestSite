@@ -14,7 +14,7 @@
 package com.example.rest.security;
 
 import com.example.rest.exception.TokenRefreshException;
-import com.example.rest.security.dto.LoginRequest;
+import com.example.rest.dto.LoginRequestDto;
 import com.example.rest.security.jwt.JwtProvider;
 import com.example.rest.security.jwt.JwtResponse;
 import com.example.rest.security.jwt.RefreshJwtRequest;
@@ -41,7 +41,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequestDto loginRequestDto) {
 //        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword());
 //        Authentication authentication = authenticationManager.authenticate(authToken);
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -49,7 +49,7 @@ public class AuthController {
 //
 //        return ResponseEntity.ok(new JwtResponse(jwtToken));
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getLogin(), loginRequestDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

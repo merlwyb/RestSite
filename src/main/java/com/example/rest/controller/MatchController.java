@@ -1,8 +1,12 @@
 package com.example.rest.controller;
 
+import com.example.rest.dto.CreateMatchFormDto;
 import com.example.rest.entity.Match;
+import com.example.rest.entity.User;
+import com.example.rest.entity.security.GameType;
+import com.example.rest.repository.GameRepository;
 import com.example.rest.service.MatchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.rest.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +18,11 @@ import java.util.List;
 public class MatchController {
 
     private final MatchService matchService;
+    private final UserService userService;
 
-    public MatchController(MatchService matchService) {
+    public MatchController(MatchService matchService, UserService userService) {
         this.matchService = matchService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -34,9 +40,23 @@ public class MatchController {
     }
 
     @PostMapping
-    public ResponseEntity<Match> newMatch(@RequestBody Match match) {
-        Match createdMatch = matchService.save(match);
-        return new ResponseEntity<>(createdMatch, HttpStatus.CREATED);
+    public ResponseEntity<Match> newMatch(@RequestBody CreateMatchFormDto createMatchFormDto) {
+        User user = userService.findById(createMatchFormDto.getUserId());
+        user.setTokenAmount(user.getTokenAmount() - createMatchFormDto.getResult());
+        userService.save(user);
+
+        try {
+            matchService.createMatch(
+                    user,
+                    GameType.valueOf(createMatchFormDto.getGameType()),
+                    createMatchFormDto.getBet(),
+                    createMatchFormDto.getMultiply(),
+                    createMatchFormDto.getResult());
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

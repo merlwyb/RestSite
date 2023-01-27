@@ -20,40 +20,28 @@ public class UserController {
     }
 
     @GetMapping
-            ResponseEntity<List<User>> all() {
+    ResponseEntity<List<User>> all() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    User newUser(@RequestBody User newUser) {
-        return userService.save(newUser);
+    ResponseEntity<User> newUser(@RequestBody User newUser) {
+        return new ResponseEntity<>(userService.save(newUser), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    EntityModel<User> findUserById(@PathVariable Long id) {
+    ResponseEntity<User> findUserById(@PathVariable Long id) {
         User user = userService.findById(id);
-
-        return EntityModel.of(user,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).findUserById(id)).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).all()).withRel("users"));
-        //return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-//    @PutMapping("/{id}")
-//    User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
-//        return userService.findById(id)
-//                .map(user -> {
-//                    user.setFullName(newUser.getFullName());
-//                    return userService.save(user);
-//                }).orElseGet(() -> {
-//                    newUser.setId(id);
-//                    return userService.save(newUser);
-//                });
-//    }
-
     @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable Long id) {
+    ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

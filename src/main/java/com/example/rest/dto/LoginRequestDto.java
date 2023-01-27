@@ -1,7 +1,7 @@
 
-package com.example.rest.security.dto;
+package com.example.rest.dto;
 
-public class LoginRequest {
+public class LoginRequestDto {
     private String login;
 
     private String password;

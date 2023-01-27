@@ -22,3 +22,6 @@ ENTRYPOINT ["java", "-jar", "rest-0.0.1-SNAPSHOT.jar"]
 # docker save -o docker-rest-test.tar docker-rest-test
 # docker load -i docker-rest-test.tar
 
+# docker login -u ... -p ...
+# docker image build -t merlwyb/docker-rest-test .
+
